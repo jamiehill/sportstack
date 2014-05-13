@@ -23,15 +23,18 @@
 		 	parseElement($element);
 		 };
 
+		 /**
+		  * Toggle the block open/closed
+		  * @param  {[type]} el    [description]
+		  * @param  {[type]} index [description]
+		  * @return {[type]}       [description]
+		  */
 		 plugin.toggle = function(el, index) {
-		 	var data = stacks[$(el).attr('id')];
-		 	if (index >= 0 && index <= data.blocks.length - 1) {
+		 	var data = stacks[$(el).attr('id')],
+		 		settings = data.settings[index],
 
-		 		var settings = data.settings[index],
 		 		method = settings.collapsed ? 'show' : 'hide';
-
 		 		plugin[method].apply(plugin, [el, index]);
-		 	}
 		 };
 
     	/**
@@ -43,26 +46,15 @@
     	 plugin.show = function(el, index) {
     	 	var data = stacks[$(el).attr('id')];
     	 	if (index >= 0 && index <= data.blocks.length - 1) {
-
     	 		var $header 	= $(data.headers[index]),
-    	 		$block  	= $(data.blocks[index]),
-    	 		settings   	= data.settings[index];
-
-                if (!settings.collapsed) // toggle closed
-                	return plugin.hide(el, index);
+    	 			$block  	= $(data.blocks[index]),
+    	 			$settings  	= data.settings[index];
 
                 $header.addClass(plugin.config.expandedClass);
                 $block.addClass(plugin.config.expandedClass);
-                settings.collapsed = false;
-                // $block.css('display', 'block');
-                // $block.stop();
-                // $block.animate({
-                //     'height': 		'auto',
-                //     'padding': 		settings.padding,
-                //     'margin': 		settings.margin
-                // }, plugin.config.showSpeed);
 
-                // $block.css({'display':'block'});
+                $settings.collapsed = false;
+                $block.stop();
             }
         };
 
@@ -75,29 +67,15 @@
     	 plugin.hide = function(el, index) {
     	 	var data = stacks[$(el).attr('id')];
     	 	if (index >= 0 && index <= data.blocks.length - 1) {
-
-    	 		var $header 	= $(data.headers[index]),
-    	 		$block 		= $(data.blocks[index]),
-    	 		settings	= data.settings[index];
+    	 		var $header  = $(data.headers[index]),
+    	 			$block 	 = $(data.blocks[index]),
+    	 			settings = data.settings[index];
 
     	 		$header.removeClass(plugin.config.expandedClass);
     	 		$block.removeClass(plugin.config.expandedClass);
-    	 		settings.collapsed = true;
     	 		
-                // $block.stop();
-                // $block.css({'visibility': 'hidden'});
-
-                // $block.animate({
-                //     'height': 0,
-                //     'padding': 0
-                // }, plugin.config.hideSpeed, function() {
-                //     $(this).css({
-                //         'display':     'none',
-                //         'visibility':  'hidden'
-                //     });
-                // });
-
-				// $block.css({'display':'none'})
+    	 		settings.collapsed = true;
+    	 		$block.stop();
 			}
 		};
 
@@ -125,6 +103,7 @@
     	 var parseHeaders = function(el) {
     	 	var headers = $('dt', el);
     	 	headers.each(function(index) {
+    	 		$(this).addClass(plugin.config.expandedClass);
     	 		$(this).bind('click', function() {
     	 			plugin.toggle(el, index);
     	 		});
@@ -143,12 +122,12 @@
     	 	settings = [];
 
     	 	blocks.each(function(index) {
-    	 		var $block = $(this);
+                $(this).addClass(plugin.config.expandedClass);
     	 		settings.push({
-    	 			'height':      $block.height(),
-    	 			'outerHeight': $block.outerHeight(),
-    	 			'padding':     zerofy($block.css('padding')),
-    	 			'margin':      zerofy($block.css('margin')), 
+    	 			'height':      $(this).height(),
+    	 			'outerHeight': $(this).outerHeight(),
+    	 			'padding':     zerofy($(this).css('padding')),
+    	 			'margin':      zerofy($(this).css('margin')), 
     	 			'collapsed':   false            
     	 		});
     	 	});
