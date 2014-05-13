@@ -6,8 +6,7 @@ dl.sportstack {
 	font-family: Arial, sans-serif; 
 	font-size: 12px 
 }
-dl.sportstack dt,
-dl.sportstack #level2 dt { 
+dl.sportstack dt { 
 	background: #000; 
 	color: #FFF; 
 	font-weight: bold; 
@@ -29,6 +28,7 @@ dl.sportstack dd.xpanded {
 	margin: 1px 0;
 	/*display:block;*/
 }
+
 
 dl dd {
 	display:block;
