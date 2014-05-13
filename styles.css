@@ -6,36 +6,42 @@ dl.sportstack {
 	font-family: Arial, sans-serif; 
 	font-size: 12px 
 }
+
+/* Level 1 headers */
 dl.sportstack dt { 
 	background: #000; 
 	color: #FFF; 
 	font-weight: bold; 
-	padding: 5px 
-}
-dl.sportstack #level2 dt  { 
-	background: #FFCC00; 
+	padding: 20px;
 }
 
+/* Level 2 headers */
+dl.sportstack #level2 dt  { 
+	background: #FFCC00; 
+	padding: 10px;
+}
+
+/* Closed block */
 dl.sportstack dd { 
 	background: #EFEFEF; 
 	padding: 0px; 
 	margin: 1px 0;
 }
 
+/* Open block */
 dl.sportstack dd.xpanded { 
-	background: #EFEFEF; 
-	padding: 0px; 
-	margin: 1px 0;
-	/*display:block;*/
+	padding: 100px;
 }
 
 
 dl dd {
 	display:block;
+
 }
 
 dl dd.xpanded {
 	display:none;
+	margin: 20px;
 }
 
 
