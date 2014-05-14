@@ -1,4 +1,7 @@
-body { }
+dl {
+	display: block;
+	margin:0px;
+}
 
 
 dl.sportstack { 
@@ -23,25 +26,31 @@ dl.sportstack #level2 dt  {
 
 /* Closed block */
 dl.sportstack dd { 
-	background: #EFEFEF; 
 	padding: 0px; 
-	margin: 1px 0;
+	margin: 0px;
 }
 
 /* Open block */
 dl.sportstack dd.xpanded { 
-	padding: 100px;
+	/*padding: 100px;*/
 }
 
-
 dl dd {
-	display:block;
-
+    -webkit-transition: max-height .5s ease;
+    -moz-transition: max-height .5s ease;
+    transition: max-height .5s ease;
+    overflow: hidden;
 }
 
 dl dd.xpanded {
-	display:none;
-	margin: 20px;
+	/*display:none*/
+	/*height: auto;*/
+    /*min-height:40px;*/
+    max-height:0%;
+}
+
+dl dd.collapsed {
+	max-height:100%;
 }
 
 

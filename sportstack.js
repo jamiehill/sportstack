@@ -8,7 +8,8 @@
  		var $element = elem, plugin = this, stacks = {};
  		var defaults = {
  			childClass: 'child',
- 			expandedClass: 'xpanded',
+ 			expandCls: 'xpanded',
+            collapseCls: 'collapsed',
  			hideSpeed: 1000,
  			showSpeed: 1000
  		}
@@ -50,13 +51,24 @@
     	 			$block  	= $(data.blocks[index]),
     	 			$settings  	= data.settings[index];
 
-                $header.addClass(plugin.config.expandedClass);
-                $block.addClass(plugin.config.expandedClass);
+                $block.css({ "max-height": $block.innerHeight() + 'px' });
 
+                toggleClass($header, $block, true);
                 $settings.collapsed = false;
                 $block.stop();
             }
         };
+
+        var toggleClass = function(hdr, blk, xpd) {
+            var add = plugin.config.expandCls,
+                rm = plugin.config.collapseCls;
+
+            // hdr.toggleClass(plugin.config.expandCls);
+            // blk.toggleClass(plugin.config.expandCls);
+
+            hdr.addClass(xpd?add:rm); blk.addClass(xpd?add:rm);
+            hdr.removeClass(xpd?rm:add); blk.removeClass(xpd?rm:add);
+        }
 
     	/**
     	 * Hide the specified element
@@ -71,9 +83,9 @@
     	 			$block 	 = $(data.blocks[index]),
     	 			settings = data.settings[index];
 
-    	 		$header.removeClass(plugin.config.expandedClass);
-    	 		$block.removeClass(plugin.config.expandedClass);
-    	 		
+                $block.css({ "max-height": '0px' });
+
+    	 		toggleClass($header, $block, false);
     	 		settings.collapsed = true;
     	 		$block.stop();
 			}
@@ -103,8 +115,9 @@
     	 var parseHeaders = function(el) {
     	 	var headers = $('dt', el);
     	 	headers.each(function(index) {
-    	 		$(this).addClass(plugin.config.expandedClass);
-    	 		$(this).bind('click', function() {
+    	 		$(this).addClass(plugin.config.expandCls);
+    	 		$(this).bind('click', function(e) {
+                    e.preventDefault();
     	 			plugin.toggle(el, index);
     	 		});
     	 	});
@@ -122,7 +135,7 @@
     	 	settings = [];
 
     	 	blocks.each(function(index) {
-                $(this).addClass(plugin.config.expandedClass);
+                $(this).addClass(plugin.config.expandCls);
     	 		settings.push({
     	 			'height':      $(this).height(),
     	 			'outerHeight': $(this).outerHeight(),
